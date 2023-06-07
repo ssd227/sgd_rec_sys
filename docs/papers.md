@@ -28,14 +28,20 @@
 ## 行为序列()
 ---
 ## 重排
+
+基于图文内容的物品向量表征
+* [CLIP]-Learning transferable visual models from natural language
+supervision. In ICML, 2021. [[paper](https://arxiv.org/abs/2103.00020)] [[code](https://github.com/openai/CLIP)] [[blog](https://openai.com/research/clip)]
+
+漏斗多样性
+* [MMR] 相关
+* [DPP] Chen et al. Fast greedy map inference for determinantal point process to improve
+recommendation diversity. In NIPS, 2018. [[paper](https://arxiv.org/pdf/1709.05135.pdf)]
 ---
 ## 物品冷启动
 ---
 ## 其他
-基于图文内容的物品向量表征
 
-* [CLIP]-Learning transferable visual models from natural language
-supervision. In ICML, 2021. [[paper](https://arxiv.org/abs/2103.00020)] [[code](https://github.com/openai/CLIP)] [[blog](https://openai.com/research/clip)]
 ---
 
 
