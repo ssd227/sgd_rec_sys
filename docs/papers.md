@@ -18,7 +18,18 @@
 
 ---
 ## 召回(recall)
-主流思路：基于向量召回，模型输出的user_emb, item_emb存储在向量数据库中，使用最近邻查找快速从底层库中取出
+基于向量召回，模型输出的user_emb, item_emb存储在向量数据库中，使用最近邻查找快速从底层库中取出
+
+
+双塔模型训练
+
+* Pointwise：独⽴看待每个正样本、负样本，做简单的⼆元分类。
+* Pairwise：每次取⼀个正样本、⼀个负样本
+  * Jui-Ting Huang et al. Embedding-based Retrieval in Facebook Search. InKDD, 2020. [[paper]()]
+* Listwise：每次取⼀个正样本、多个负样本
+  * Xinyang Yi et al. Sampling-Bias-Corrected Neural Modeling for Large Corpus Item
+Recommendations. In RecSys, 2019. [[paper]()]
+
 
 ---
 ## 排序(rank)

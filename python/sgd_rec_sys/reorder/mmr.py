@@ -19,6 +19,11 @@ class Item:
         
     def set_emb(self, e:np.array):
         self.emb = e
+        
+    def get_norm_emb(self):
+        if self.emb is None:
+            raise ValueError("not set variable emb for Item:[{}]", self.id)
+        return self.emb / np.linalg.norm(self.emb, ord=2)
 
     def sim(self, other):
         # 物品向量的余弦相似度
