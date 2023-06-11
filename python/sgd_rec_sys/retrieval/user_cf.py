@@ -23,13 +23,14 @@ class UserCF():
     def parser_rate(self, meta_data):
         rate_pairs = meta_data.rate_meta_info()['rate_pairs']  #  list[ list[uid, iid, rate] ]
         
-        parsed_dict = dict() # 二级字典，方便查找公共元素
+        # 基于用户
+        user_dict = dict() # 二级字典，方便查找公共元素
         for uid, iid, rate in rate_pairs:
-            if uid not in parsed_dict:
-                parsed_dict[uid] = dict()
-                parsed_dict[uid][iid] = rate
+            if uid not in user_dict:
+                user_dict[uid] = dict()
+                user_dict[uid][iid] = rate
             else:
-                parsed_dict[uid][iid]=rate # 用户的新评分会覆盖旧评分（存在重复评分）
+                user_dict[uid][iid]=rate # 用户的新评分会覆盖旧评分（存在重复评分）
                 
         # 统计每个物品的喜欢人数，来定义是否是热门物品
         like_n = dict()
@@ -42,7 +43,7 @@ class UserCF():
             else:
                 continue
         
-        return parsed_dict, like_n
+        return user_dict, like_n
         
     
     # cos-sim: 可以兼顾喜欢和不喜欢的评分

@@ -14,14 +14,16 @@ class ItemCF():
     def parser_rate(self, meta_data):
         rate_pairs = meta_data.rate_meta_info()['rate_pairs']  #  list[ list[uid, iid, rate] ]
         
-        parsed_dict = dict() # 二级字典，方便查找公共元素
+        # 基于物品
+        item_dict = dict() # 二级字典，方便查找公共元素
         for uid, iid, rate in rate_pairs:
-            if iid not in parsed_dict:
-                parsed_dict[iid] = dict()
-                parsed_dict[iid][uid] = rate
+            if iid not in item_dict:
+                item_dict[iid] = dict()
+                item_dict[iid][uid] = rate
             else:
-                parsed_dict[iid][uid]=rate # 用户的新评分会覆盖旧评分（存在重复评分）
-        return parsed_dict
+                item_dict[iid][uid]=rate # 用户的新评分会覆盖旧评分（存在重复评分）
+                
+        return item_dict
         
     
     # 计算物品间的相似度(cosin sim)
