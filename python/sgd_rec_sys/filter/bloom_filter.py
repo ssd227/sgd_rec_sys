@@ -19,14 +19,21 @@ from .hash_help import MyHashFunctions
 from bitarray import bitarray
 
 
+'''
+n     : 曝光物品集合⼤⼩
+m     : ⼆进制向量维度为
+k     : 使⽤𝑘个哈希函数
+sigma : 可容忍的误伤概率 
+'''
+
 class BloomFilter:
     def __init__(self, n, error_rate=0.01) -> None:
-        self.error_rate = error_rate
-        self.n = n  # capacity
-        
-        log_sigma_reverse = log(1/self.error_rate)
-        self.k = int(1.44 * log_sigma_reverse)  # best nums_bits
-        self.m = int(2 * n * log_sigma_reverse)  # best hash func nums
+        self.sigma = error_rate
+        self.n = n  # capacity 曝光物品集合⼤⼩为𝑛
+
+        log_sigma_reverse = log(1/self.sigma)
+        self.k = int(1.44 * log_sigma_reverse) # best hash func nums
+        self.m = int(2 * n * log_sigma_reverse) # best nums_bits ⼆进制向量维度为𝑚
         
         self.bits = bitarray(self.m)
         self.bits[:] = 0 # setall(0)

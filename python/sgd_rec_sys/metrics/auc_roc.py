@@ -3,6 +3,8 @@
 
 import numpy as np
 
+__all__ = ['roc', 'auc']
+
 def roc(y_hat, y):
     """
     输入:

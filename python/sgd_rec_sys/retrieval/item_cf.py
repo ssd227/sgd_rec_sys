@@ -24,8 +24,7 @@ class ItemCF():
                 item_dict[iid][uid]=rate # 用户的新评分会覆盖旧评分（存在重复评分）
                 
         return item_dict
-        
-    
+
     # 计算物品间的相似度(cosin sim)
     def sim(self, iid1, iid2): 
         # 评分大多是稀疏数据，不直接使用向量计算

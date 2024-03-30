@@ -113,8 +113,7 @@ class UserCF():
         print("common", common)
         
         p = sum([ math.log(1+self.item_like_n[itemid]) ** -1 for itemid in common])
-        q = (len(j1) ** 0.5) * \
-            (len(j2) ** 0.5) 
+        q = (len(j1)*len(j2))**0.5 
         return p/q
     
 
