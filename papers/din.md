@@ -1,0 +1,15 @@
+## [DIN] Guorui Zhou, et al. Deep Interest Network for Click-Through Rate Prediction. In KDD, 2018. [[paper]](https://arxiv.org/abs/1706.06978)
+---
+- 模型改进：对lastn做attention加权
+- 工程改进：模型训练trick 基于batch的norm + 基于输入分布的激活函数PReLU
+- L2正则项，实际上在optimizer里选择性操作是不是更容易实现。
+- 激活函数的改进，感觉用bathnorm是个更佳的选择
+- 没太看懂过滤掉低频商品，能避免过拟合。还是说L2正则只用在高频物品上。
+    - Filter visited goods_id by occurrence frequency in samples and leave only the most frequent ones. In our setting,top 20 million good_ids are left
+    - 还对比了其他过拟合方式 Regularization in DiFacto（没见过）
+---
+- [`评价`]
+  - 整体思路比较清晰，电商场景下可能有效。
+  - 速览：快速看图，了解模型结构和核心思想
+  - 工程实践可以借鉴，设计emb训练框架
+  - 论文（2018）有时代背景的局限性，适度参考。

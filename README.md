@@ -3,67 +3,63 @@
 ## 1 项目目标
 搭建一个完整可用的推荐系统，模块化实现推荐各阶段常用模型和算法。
 
-进度：
+参考:
+* 王树森[推荐系统系列课程](https://space.bilibili.com/1369507485/channel/collectiondetail?sid=615109)-王树森 为主要系统框架
+* [cs329-实用机器学习](https://space.bilibili.com/1567748478/channel/collectiondetail?sid=28144)-李沐 一些工程实践
+* 推荐方向实用论文
+
+进度&问题：
   - 相关论文大致实现了一遍，忽略了不少细节。
-  - 文档待整理完善
-  - 框架需要抽象，还做不到组合即用
+  - 某些召回模型，lastn模型依赖的工程细节比较多，没有实现
+    - 不太方便用fake数据整合，更适合单开一个项目维护
+  - 框架需要抽象，还做不到组合即用。
     - 编码层需要统一抽象处理
 
-参考:
-* 王树森[推荐系统系列课程](https://space.bilibili.com/1369507485/channel/collectiondetail?sid=615109)为主要系统框架
-* [cs329-实用机器学习](https://space.bilibili.com/1567748478/channel/collectiondetail?sid=28144)-李沐-一些工程实践
-* 推荐方向最新论文的整合
+目前更适合用作个人的文档参考，快速利用现有知识搭建新系统。ctr预估的corss部分倒是可以快速复用。
+
+立项时把工程问题想的太简单了, 系统不是几个模型和算法就能够快速部署的。数据存储预处理、emblayer设计和整合、向量数据库服务、推荐服务链都需要大量的整合工作。
+
 
 ---
 
-## 2 sgd_rec_sys主要内容
+## 2 主要内容
+| 文件路径   |      作用    |
+|---------- |:-------------:|
+| [./python/sgd_rec_sys](./python/sgd_rec_sys/)  |  模型、算法实现 | 
+|[./apps](./apps/)      |模型、算法使用样例| 
+|[./docs](./docs/)      |推荐各阶段技术说明|
+|[./papers](./papers/)  | 论文review | 
 
-本代码库包含三个主要部分：
-* [./python/sgd_rec_sys](./python/sgd_rec_sys/): src目录
-* [./apps](./apps/): 算法模型的使用方法请参考各模块中的jupyter_notebook
-* [./docs](./docs/) 针对某些具体算法、工程问题做展开介绍。 
-* 相关论文 [papers.md](./papers.md)
-
----
 
 ## 3 实现进度
 - retrieval
-  - [X] Item CF
-  - [X] User CF
-  - [X] swing
-  - [X] MF (矩阵分解) 
-  - [ ] DSSM (双塔模型)
+  - [X] Item CF [[code]](./python/sgd_rec_sys/retrieval/item_cf.py) [[notebook]](./apps/retrieval/item_cf.ipynb)
+  
+  - [X] User CF [[code]](./python/sgd_rec_sys/retrieval/user_cf.py) [[notebook]](./apps/retrieval/user_cf.ipynb)
+  
+  - [X] swing [[code]](./python/sgd_rec_sys/retrieval/swing.py) [[notebook]](./apps/retrieval/swing.ipynb)
+  
+  - [X] MF (矩阵分解) [[code]](./python/sgd_rec_sys/retrieval/mf.py) [[notebook]](./apps/retrieval/mf.ipynb)
+  
+  - DSSM (双塔模型) [[code]](./python/sgd_rec_sys/retrieval/dssm.py)
+    - [ ] pointwise
+    - [X] pairwise [[notebook]](./apps/retrieval/dssm.ipynb)
+    - [X] listwise [[notebook]](./apps/retrieval/dssm.ipynb)
+    - [ ] batch内负采样
+  - [ ] 双塔模型+自监督学习
   - [ ] Deep Retrieval
-    - 搞懂设计思路，模型本身没意思
   - [ ] 其他召回通道
-    - [ ] GeoHahs
-      - GeoHash：对经纬度的编码，地图上⼀个长⽅形区域
-      - 索引：GeoHash->优质笔记列表（按时间倒排）
-    - [ ] 同城召回
-      - 索引：城市->优质笔记列表（按时间倒排）
-    - [ ] 关注作者召回
-      - ⽤户->关注的作者->最新的笔记
-    - [ ] 有交互的作者召回
-      - ⽤户->有交互的作者->最新的笔记
-    - [ ] 相似作者召回
-      - ⽤户->感兴趣的作者->相似作者->最新的笔记
-    - [ ] 缓存召回
-      - 精排前50，但是没有曝光的，缓存起来，作为⼀条召回通道。
-      - 缓存⼤⼩固定，需要退场机制。
-        - 召回次数、保存天数、FIFO、曝光退场
+    -  GeoHahs、同城召回、关注作者召回、有交互作者召回、相似作者召回、缓存召回
 
 - filter
   - [X] 曝光过滤 & Bloom Filter
   
 - rank
-  - [ ] 多目标建模
-  - [ ] MMOE
+  - [X] 多目标建模
+  - [X] MMOE
   - [X] 融合预估分数
   - [ ] Youtube 视频播放建模
-  - [ ] 排序模型特征
   - [ ] 粗排三塔
-  - [ ] google Deep and Wide (概念模型pass)
-    - 基于特征工程的LR+DNN并行
 
 - cross
   - FM
@@ -71,9 +67,10 @@
     - [X] DeepFM
     - [ ] xDeepFM (太丑了pass)
 
+  - [ ] Deep and Wide
+  
   - Deep & Cross
     - [X] DCN V1
-      - cross layer模型容量小
     - [X] DCN V2
   
   - LHUC
@@ -82,7 +79,6 @@
   - field 交叉
     - [X] FiBinet 
       - SENet + Bilinear Cross
-      - 矩阵实现Bilinear略费劲
 
 - lastn
   - [X] DIN
@@ -97,141 +93,182 @@
     - 施密特正交法找基向量，类DPP
 
 - cold start
-  - 召回通道
-    - 修正双塔召回
-    - 类目(关键词)召回
-      - 用户->类目(关键词)偏好分布
-      - 类目(关键词)->笔记列表（按时间倒排）
-    - 聚类召回
-      - 图文向量-> kmeans聚类
-    - look alike
-      - 新笔记->有交互用户->相似用户扩散（user-cf，用户向量余弦）
-      - 种子用户emb均值->新笔记特征，最近邻查找匹配新用户
-    - 流量调控
-      - 提权（易过曝、欠曝）、保量
+  - 空白
 
 - metrics
   - [X] accuracy、precision、recall、f1
-  - [X] AUC_ROC ([原理](./docs/metrics/index.md))
+  - [X] AUC_ROC [[code]](./python/sgd_rec_sys/metrics/auc_roc.py) [[notebook]](./apps/metrics/auc_roc.ipynb) [[doc]](./docs/metrics/index.md)
 ---
 ## 4 各模块细节
-todo 准备移到docs里， 相关论文读后感也放到各自类目下
-准备一个简单的总读论文的列表，方便他人参考
-
-### 4.1 召回(retrieval)
-```
-主流方法：
-    基于向量召回，模型输出的user_emb, item_emb存储在向量数据库中，使用最近邻查找快速从底层库中取出。
-
-基于协同过滤的召回：
-    item cf
-    user cf
-    swing
-
-其他召回：
-    地理位置召回(无个性化)：
-        • GeoHash：对经纬度的编码，地图上⼀个长⽅形区域。
-        • 索引：GeoHash->优质笔记列表（按时间倒排）
-    
-    同城召回（无个性化）：
-        • 索引：城市->优质笔记列表（按时间倒排）
-    
-    关注(or有交互)作者召回：
-        ⽤户->关注(or有交互)的作者->最新的笔记
-    
-    相似作者召回：
-        ⽤户->感兴趣的作者->相似作者->最新的笔记
-
-    缓存召回：
-        精排前50，但是没有曝光的，缓存起来，作为⼀条召回通道。
-        需要设计缓存退场机制
-            • ⼀旦笔记成功曝光，就从缓存退场。
-            • RLU：如果超出缓存⼤⼩，就移除最先进⼊缓存的笔记。
-            • cache次数-笔记最多被召回10次，达到10次就退场。
-            • cache时间-每篇笔记最多保存3天，达到3天就退场。
-
-改进召回模型
-  • 双塔模型：优化正负样本、改进神经⽹络结构、改进训练的⽅法。
-  • I2I模型：同时使⽤ItemCF 及其变体、使⽤物品向量表征计算物品相似度。
-  • 添加⼩众的召回模型，⽐如PDN、Deep Retrieval、SINE、M2GRL 等模型。
-  • 在召回总量不变的前提下，调整各召回通道的配额。（可以让各⽤户群体⽤不同的配额。）
-
-  过时方法（低算力时代的方法）：
-
-```
-
-### 4.2 排序(rank)
-```
-
-
-```
-
-### 4.3 特征交叉(feature cross)
-```
-
-```
-
-### 4.4 行为序列() 
-```
-```
-
-### 4.5 重排(reorder)
-```
-物品多样性（物品漏斗中的相似度度量）：
-    1、物品属性标签
-        每个物品有n级标签，通过标签计算相似度。
-        这种方法比较简单，标签也可以用模型离线计算。
-    2、 item embedding
-        利用clip计算出的item的图文emb
-        使用mmr或dpp等不同的向量度量标准来选取物品
-         -同时考虑item reward & 向量相似度
-        
-```
-
-### 4.6 物品冷启动(cold start)
-```
-
-```
-
-### 4.7 模型指标(metrics)
-* accuracy、precision、recall、f1
-* roc、auc
-* 参考文档 [[docs/mertics]](./docs/metrics/index.md)
-
-### 4.8 A/B测试
-* 同层实验互斥、不同层正交
-* Holdout 机制（纯净流量）
-  * 部门整体策略收益
-* 反向对照实验（推全后开关关闭的实验）
-  * 用于长期观察实验指标
-
+相关论文读后感也放到各自类目下
+[index]()
 
 
 ---
-## 5 其他
+## 5 推荐系统 相关论文
 
-### 5.1 文档自动生成生成
+---
+### 5.1 召回(recall)
+基于向量召回，模型输出的user_emb, item_emb存储在向量数据库中，使用最近邻查找快速从底层库中取出
+
+双塔模型、向量召回
 ```
-TODO:
-    python-sphinex
-
+Pointwise：独⽴看待每个正样本、负样本，做简单的⼆元分类。
+Pairwise：每次取⼀个正样本、⼀个负样本
+Listwise：每次取⼀个正样本、多个负样本
 ```
 
+- [X] [`EBR`] Jui-Ting Huang et al. Embedding-based Retrieval in Facebook Search. In KDD, 2020. [[paper]](https://arxiv.org/abs/2006.11632) [[简评]](./papers/erb.md) [⭐️⭐️⭐️`经典必读`]
 
-5.2 相关术语
+- [ ] [DSSM-Mircosoft] [[paper]]()
+
+
+- [X] [`Batch内负采样`] Xinyang Yi et al. Sampling-Bias-Corrected Neural Modeling for Large Corpus Item Recommendations. In RecSys, 2019. [[paper]](https://research.google/pubs/sampling-bias-corrected-neural-modeling-for-large-corpus-item-recommendations/) [[简评]](./papers/batch_neg.md) [⭐️]
+
+
+- [X] [`自监督学习`]Tiansheng Yao et al. Self-supervised Learning for Large-scale Item Recommendations.In CIKM, 2021. [[paper]](https://arxiv.org/abs/2007.12865) [[简评]](./papers/self-supervised.md) [⭐️⭐️]
+
+deep retrieval
+- [ ] Weihao Gao et al. Learning A Retrievable Structure for Large-Scale Recommendations. In CIKM, 2021. [[paper]]()
+- [ ] [`TDM`] Han Zhu et al. Learning Tree-based Deep Model for Recommender Systems. In KDD, 2018. [[paper]]()
+
+曝光过滤
+- [ ] [`Bloom Filter`] Burton H. Bloom. Space/time trade-offs in hash coding with allowable
+errors. Communications of the ACM, 1970.
+[[paper]](https://sci-hub.et-fine.com/10.1145/362686.362692)
+
+更复杂的模型 (召回占比小，但有效)
+- [ ] [`PDN`] Li et al. Path-based Deep Network for Candidate Item Matching in Recommenders. In SIGIR, 2021. [[paper]]()
+- [ ] [Deep Retrieval] Gao et al. Learning an end-to-end structure for retrieval in large-scale recommendations. In CIKM, 2021. [[paper]]()
+- [ ] [`SINE`] Tan et al. Sparse-interest network for sequential recommendation. In WSDM, 2021. [[paper]]()
+- [ ] [`M2GRL`] Wang et al. M2GRL: A multitask multi-view graph representation learning framework for webscale
+recommender systems. In KDD, 2020. [[paper]]()
+
+---
+### 5.2 排序(rank)
+
+排序模型框架
+- [X] [`wide&deep`] Heng-Tze Cheng, et al. Wide & Deep Learning for Recommender Systems. In DLRS, 2016. [[paper]](https://arxiv.org/abs/1606.07792) [[简评]](./papers/wide%26deep.md) [⭐️⭐️`经典工程`]
+
+视频播放建模
+- [X] [`Youtube Video`] Paul Covington, Jay Adams, & Emre Sargin. Deep Neural Networks for YouTube Recommendations. In RecSys, 2016. [[paper]](https://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/45530.pdf) [[简评]](./papers/youtube_video.md) [`经典`]
+
+
+多目标模型预估值校准
+- [ ] Xinran He et al. Practical lessons from predicting clicks on ads at Facebook. In the 8th
+International Workshop on Data Mining for Online Advertising. [[paper]]()
+
+多目标预估
+```
+- 基于基座输出的向量，同时预估点击率等多个⽬标。
+- 改进1：增加新的预估⽬标，并把预估结果加⼊融合公式。
+- 改进2：`MMoE`、`PLE`等结构可能有效，但往往无效。
+- 改进3：`纠正position bias`可能有效，也可能无效。
+```
+
+- [ ] [`MMOE`] Jiaqi Ma et al. Modeling Task Relationships in Multi-task Learning with
+Multi-gate Mixture-of-Experts. InKDD, 2018. [[paper]](https://dl.acm.org/doi/pdf/10.1145/3219819.3220007)
+
+- [ ] [`PLE`] Tang et al. Progressive layered extraction (PLE): A novel multi-task learning (MTL)
+model for personalized recommendations. In RecSys, 2020. [[paper]]()
+
+- [ ] [`纠正position bias`] Zhe Zhao et al. Recommending What Video to Watch Next: A Multitask
+Ranking System. In RecSys, 2019. [[paper]](https://daiwk.github.io/assets/youtube-multitask.pdf)
+
+粗排三塔模型
+- [ ] [`COLD`] Zhe Wang et al. COLD: Towards the Next Generation of Pre-Ranking System. In DLPKDD, 2020.[[paper]](https://arxiv.org/abs/2007.16122)
+---
+
+### 5.3 特征交叉(feature cross)
+
+FM系列模型（过时）
+
+- [X] [FM] Steffen Rendle. Factorization machines. In ICDM, 2010. [[paper]](https://sci-hub.yncjkj.com/10.1109/icdm.2010.127) [[简评]](./papers/fm.md) [⭐️⭐️⭐️`经典`]
+
+- [X] [`DeepFM`]Huifeng Guo, et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. In cs.IR, 2017.[[paper]](https://arxiv.org/abs/1703.04247) [[简评]](./papers/deepfm.md) [⭐️]
+
+- [X] [`xDeepFM`] Jianxun Lian, et al. xDeepFM: Combining Explicit and Implicit Feature Interactions for Recommender Systems. In , 2018. [[paper]](https://arxiv.org/pdf/1803.05170.pdf) [[简评]](./papers/xdeepfm.md) [⭐️`丑陋`] 
+
+
+Cross Network
+- [Deep And Cross] 可设置任意次数的特征交叉
+- [X] [DCN V1] Ruoxi Wang et al. Deep & Cross Network for Ad Click Predictions. In ADKDD, 2017. [[paper]](https://arxiv.org/abs/1708.05123) [[简评]](./papers/dcnv1.md) [⭐️⭐️⭐️]
+  
+- [X] [DCN V2] Ruoxi Wang, et al. DCN V2: Improved Deep & Cross Network and Practical Lessons for Web-scale Learning to Rank Systems. InWWW, 2021. [[paper]](https://arxiv.org/abs/2008.13535) [[简评](./papers/dcnv2.md)] [⭐️⭐️⭐️]
+  
+LHUC
+- [X] [PPNet] Parameter Personalized Net-快⼿落地万亿参数推荐精排模型，2021。 [[Blog](https://ai.51cto.com/art/202102/644214.html)] [[简评]](./papers/ppnet.md) [⭐️⭐️]
+  - [ ] [LHUC]Pawel Swietojanski, Jinyu Li, & Steve Renals. Learning hidden unit contributions for unsupervised acoustic model adaptation. IEEE/ACM Transactions on Audio, Speech, and Language Processing, 2016. [[paper]]()
+
+SENet & Bilinear Cross
+- [X] [`FiBiNet`] Tongwen Huang, Zhiqi Zhang, and Junlin Zhang. FiBiNET: Combining Feature Importance and Bilinear feature Interaction for Click-Through Rate Prediction. In RecSys, 2019. [[paper]](https://arxiv.org/abs/1905.09433) [[简评]](./papers/fibinet.md) [⭐️⭐️⭐️]
+  - [ ] Jie Hu, Li Shen, and Gang Sun. Squeeze-and-Excitation Networks. In CVPR, 2018. [[paper]]()
+
+---
+
+### 5.4行为序列(lastn)
+- [X] [DIN] Guorui Zhou, et al. Deep Interest Network for Click-Through Rate Prediction. In KDD, 2018. [[paper]](https://arxiv.org/abs/1706.06978) [[简评]](./papers/din.md) [⭐️⭐️]
+
+- [X] [SIM] Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction In CIKM, 2020. [[paper]](https://arxiv.org/abs/2006.05639) [[简评]](./papers/sim.md) [⭐️⭐️]
+
+---
+
+### 5.5 重排
+
+基于图文内容的物品向量表征
+- [ ] [CLIP-OpneAI] Learning transferable visual models from natural language
+supervision. In ICML, 2021. [[paper]](https://arxiv.org/abs/2103.00020) [[code]](https://github.com/openai/CLIP) [[blog]](https://openai.com/research/clip)
+
+漏斗多样性
+- [X] [MMR] 相关
+  - (来自检索算法) 从候选集C中，逐个贪心找出与当前S最不相似的item
+- [X] [DPP] Chen et al. Fast greedy map inference for determinantal point process to improve recommendation diversity. In NIPS, 2018. [[paper]](https://arxiv.org/pdf/1709.05135.pdf) [[简评]](./papers/dpp.md) [⭐️⭐️⭐️]
+
+---
+
+### 5.6 Cold Start (物品冷启动)
+
+---
+
+### 5.7 A/B测试
+- [ ] [Google] Tang et al. Overlapping experiment infrastructure: more, better, faster
+experimentation. InKDD, 2010. [[paper]]()
+
+---
+
+### 5.8 其他
+
+总体感觉推荐方向的论文写的都挺扯淡的。论证角度不是很高，工业细节也不够细。想法和贡献大多来自CV、NLP
+
+
+---
+## 6 其他
+### 6.1 相关术语
+
 ![推荐系统整体框架](./terminology.webp)
 
+### 6.2 问题：
+- 如何保证全链路的排序一致性？（疑问且重要）
+  - 召回，粗排，精排
+  - 粗排模型的设计方向有那些。
 
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+- 编码层，对于各个物品，用户emb
+  - 那些编码是多阶段共用的
+  - 每个emb在各阶段的训练中是如何更新+同步的
+    - 感觉需要有一个全局的emb系统
+    - 怎么去设计这样一个系统
+      - 方便模型调用+训练
 
-
-## todo
-- 学到了一个新操作 torch.einsum(equation, *operands)
-  - fibnet里的那些复杂操作可以进一步简化api了
+### 6.3 TODO
+- fibnet 矩阵交叉计算的数值验证
+  - 学了个新操作 `torch.einsum`
+  - fibnet的复杂操作可以简化
 - multi-hot的定长批处理实现的比较丑
 
+- 文档自动生成生成
+  - python-sphinex
+
+---
+
+注释符号:❌✅⭐️★☆⚡️ ❤️ ☀️ ☁️☔️ ☃️ ✈️⚽️⚓️⌛️☎️✉️✨☮️☯️ 
 
