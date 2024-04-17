@@ -6,3 +6,6 @@ from .fake_lastn_dataset import *
 
 from .fake_dssm_data import *
 from .fake_dssm_dataset import *
+
+from .fake_multitask_data import *
+from .fake_multitask_dataset import *

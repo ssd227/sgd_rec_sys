@@ -52,42 +52,42 @@
     -  GeoHahs、同城召回、关注作者召回、有交互作者召回、相似作者召回、缓存召回
 
 - filter
-  - [X] 曝光过滤 & Bloom Filter
+  - [X] 曝光过滤 & Bloom Filter [[code]](./python/sgd_rec_sys/filter/bloom_filter.py) [[notebook]](./apps/filter/bloomFilter.ipynb)
   
 - rank
-  - [X] 多目标建模
-  - [X] MMOE
-  - [X] 融合预估分数
+  - [X] 多目标建模 [[code]](./python/sgd_rec_sys/rank/multitask.py) [[notebook]](./apps/rank/multitask.ipynb)
+  - [X] MMOE [[code]](./python/sgd_rec_sys/rank/mmoe.py) [[notebook]](./apps/rank/mmoe.ipynb)
+  - [X] 融合预估分数 [[code]](./python/sgd_rec_sys/rank/merge_score.py)
   - [ ] Youtube 视频播放建模
   - [ ] 粗排三塔
 
 - cross
   - FM
-    - [X] FM
-    - [X] DeepFM
+    - [X] FM [[code]](./python/sgd_rec_sys/cross/fm.py) [[notebook]](./apps/cross/fm.ipynb)
+    - [X] DeepFM [[code]](./python/sgd_rec_sys/cross/deepfm.py) [[notebook]](./apps/cross/deepfm.ipynb)
     - [ ] xDeepFM (太丑了pass)
 
   - [ ] Deep and Wide
   
   - Deep & Cross
-    - [X] DCN V1
-    - [X] DCN V2
+    - [X] DCN V1 [[code]](./python/sgd_rec_sys/cross/dcnv1.py) [[notebook]](./apps/cross/dcn_v1.ipynb)
+    - [X] DCN V2 [[code]](./python/sgd_rec_sys/cross/dcnv2.py) [[notebook]](./apps/cross/dcn_v2.ipynb)
   
   - LHUC
-    - [X] PPNet (快手)
+    - [X] PPNet (快手) [[code]](./python/sgd_rec_sys/cross/ppnet.py) [[notebook]](./apps/cross/ppnet.ipynb)
 
   - field 交叉
-    - [X] FiBinet 
+    - [X] FiBinet [[code]](./python/sgd_rec_sys/cross/fibinet.py) [[notebook]](./apps/cross/fibinet.ipynb)
       - SENet + Bilinear Cross
 
 - lastn
-  - [X] DIN
+  - [X] DIN [[code]](./python/sgd_rec_sys/lastn/din.py) [[notebook]](./apps/lastn/din.ipynb)
   - [ ] SIM (工程细节偏多)
   
 - rerank
-  - [X] MMR 
+  - [X] MMR [[code]](./python/sgd_rec_sys/rerank/mmr.py) [[notebook]](./apps/reorder/mmr.ipynb)
     - Candi->Saved 贪心找max unsimilar item
-  - [X] DPP
+  - [X] DPP [[code]](./python/sgd_rec_sys/rerank/dpp.py) [[notebook]](./apps/reorder/dpp.ipynb)
     - det^2 衡量相似度
   - [ ] MGS
     - 施密特正交法找基向量，类DPP
@@ -96,16 +96,15 @@
   - 空白
 
 - metrics
-  - [X] accuracy、precision、recall、f1
+  - [X] accuracy、precision、recall、f1 [[code]](./python/sgd_rec_sys/metrics/basic.py) [[notebook]](./apps/metrics/basic.ipynb)
   - [X] AUC_ROC [[code]](./python/sgd_rec_sys/metrics/auc_roc.py) [[notebook]](./apps/metrics/auc_roc.ipynb) [[doc]](./docs/metrics/index.md)
 ---
 ## 4 各模块细节
-相关论文读后感也放到各自类目下
-[index]()
+- [[docs content]](./docs/index.md)
 
 
 ---
-## 5 推荐系统 相关论文
+## 5 相关论文
 
 ---
 ### 5.1 召回(recall)
@@ -129,8 +128,9 @@ Listwise：每次取⼀个正样本、多个负样本
 - [X] [`自监督学习`]Tiansheng Yao et al. Self-supervised Learning for Large-scale Item Recommendations.In CIKM, 2021. [[paper]](https://arxiv.org/abs/2007.12865) [[简评]](./papers/self-supervised.md) [⭐️⭐️]
 
 deep retrieval
-- [ ] Weihao Gao et al. Learning A Retrievable Structure for Large-Scale Recommendations. In CIKM, 2021. [[paper]]()
+- [ ] [`Deep Retrieval`] Gao et al. Deep Retrieval: Learning A Retrievable Structure for Large-Scale Recommendations. In CIKM, 2021. [[paper]](https://arxiv.org/abs/2007.07203)
 - [ ] [`TDM`] Han Zhu et al. Learning Tree-based Deep Model for Recommender Systems. In KDD, 2018. [[paper]]()
+
 
 曝光过滤
 - [ ] [`Bloom Filter`] Burton H. Bloom. Space/time trade-offs in hash coding with allowable
@@ -139,7 +139,6 @@ errors. Communications of the ACM, 1970.
 
 更复杂的模型 (召回占比小，但有效)
 - [ ] [`PDN`] Li et al. Path-based Deep Network for Candidate Item Matching in Recommenders. In SIGIR, 2021. [[paper]]()
-- [ ] [Deep Retrieval] Gao et al. Learning an end-to-end structure for retrieval in large-scale recommendations. In CIKM, 2021. [[paper]]()
 - [ ] [`SINE`] Tan et al. Sparse-interest network for sequential recommendation. In WSDM, 2021. [[paper]]()
 - [ ] [`M2GRL`] Wang et al. M2GRL: A multitask multi-view graph representation learning framework for webscale
 recommender systems. In KDD, 2020. [[paper]]()
@@ -183,7 +182,7 @@ Ranking System. In RecSys, 2019. [[paper]](https://daiwk.github.io/assets/youtub
 
 FM系列模型（过时）
 
-- [X] [FM] Steffen Rendle. Factorization machines. In ICDM, 2010. [[paper]](https://sci-hub.yncjkj.com/10.1109/icdm.2010.127) [[简评]](./papers/fm.md) [⭐️⭐️⭐️`经典`]
+- [X] [`FM`] Steffen Rendle. Factorization machines. In ICDM, 2010. [[paper]](https://sci-hub.yncjkj.com/10.1109/icdm.2010.127) [[简评]](./papers/fm.md) [⭐️⭐️⭐️`经典`]
 
 - [X] [`DeepFM`]Huifeng Guo, et al. DeepFM: A Factorization-Machine based Neural Network for CTR Prediction. In cs.IR, 2017.[[paper]](https://arxiv.org/abs/1703.04247) [[简评]](./papers/deepfm.md) [⭐️]
 
@@ -192,12 +191,12 @@ FM系列模型（过时）
 
 Cross Network
 - [Deep And Cross] 可设置任意次数的特征交叉
-- [X] [DCN V1] Ruoxi Wang et al. Deep & Cross Network for Ad Click Predictions. In ADKDD, 2017. [[paper]](https://arxiv.org/abs/1708.05123) [[简评]](./papers/dcnv1.md) [⭐️⭐️⭐️]
+- [X] [`DCN V1`] Ruoxi Wang et al. Deep & Cross Network for Ad Click Predictions. In ADKDD, 2017. [[paper]](https://arxiv.org/abs/1708.05123) [[简评]](./papers/dcnv1.md) [⭐️⭐️⭐️]
   
-- [X] [DCN V2] Ruoxi Wang, et al. DCN V2: Improved Deep & Cross Network and Practical Lessons for Web-scale Learning to Rank Systems. InWWW, 2021. [[paper]](https://arxiv.org/abs/2008.13535) [[简评](./papers/dcnv2.md)] [⭐️⭐️⭐️]
+- [X] [`DCN V2`] Ruoxi Wang, et al. DCN V2: Improved Deep & Cross Network and Practical Lessons for Web-scale Learning to Rank Systems. InWWW, 2021. [[paper]](https://arxiv.org/abs/2008.13535) [[简评](./papers/dcnv2.md)] [⭐️⭐️⭐️]
   
 LHUC
-- [X] [PPNet] Parameter Personalized Net-快⼿落地万亿参数推荐精排模型，2021。 [[Blog](https://ai.51cto.com/art/202102/644214.html)] [[简评]](./papers/ppnet.md) [⭐️⭐️]
+- [X] [`PPNet`] Parameter Personalized Net-快⼿落地万亿参数推荐精排模型，2021。 [[Blog](https://ai.51cto.com/art/202102/644214.html)] [[简评]](./papers/ppnet.md) [⭐️⭐️]
   - [ ] [LHUC]Pawel Swietojanski, Jinyu Li, & Steve Renals. Learning hidden unit contributions for unsupervised acoustic model adaptation. IEEE/ACM Transactions on Audio, Speech, and Language Processing, 2016. [[paper]]()
 
 SENet & Bilinear Cross
@@ -207,22 +206,22 @@ SENet & Bilinear Cross
 ---
 
 ### 5.4行为序列(lastn)
-- [X] [DIN] Guorui Zhou, et al. Deep Interest Network for Click-Through Rate Prediction. In KDD, 2018. [[paper]](https://arxiv.org/abs/1706.06978) [[简评]](./papers/din.md) [⭐️⭐️]
+- [X] [`DIN`] Guorui Zhou, et al. Deep Interest Network for Click-Through Rate Prediction. In KDD, 2018. [[paper]](https://arxiv.org/abs/1706.06978) [[简评]](./papers/din.md) [⭐️⭐️]
 
-- [X] [SIM] Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction In CIKM, 2020. [[paper]](https://arxiv.org/abs/2006.05639) [[简评]](./papers/sim.md) [⭐️⭐️]
+- [X] [`SIM`] Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction In CIKM, 2020. [[paper]](https://arxiv.org/abs/2006.05639) [[简评]](./papers/sim.md) [⭐️⭐️]
 
 ---
 
 ### 5.5 重排
 
 基于图文内容的物品向量表征
-- [ ] [CLIP-OpneAI] Learning transferable visual models from natural language
+- [ ] [`CLIP`] Learning transferable visual models from natural language
 supervision. In ICML, 2021. [[paper]](https://arxiv.org/abs/2103.00020) [[code]](https://github.com/openai/CLIP) [[blog]](https://openai.com/research/clip)
 
 漏斗多样性
-- [X] [MMR] 相关
+- [X] [`MMR`] 相关
   - (来自检索算法) 从候选集C中，逐个贪心找出与当前S最不相似的item
-- [X] [DPP] Chen et al. Fast greedy map inference for determinantal point process to improve recommendation diversity. In NIPS, 2018. [[paper]](https://arxiv.org/pdf/1709.05135.pdf) [[简评]](./papers/dpp.md) [⭐️⭐️⭐️]
+- [X] [`DPP`] Chen et al. Fast greedy map inference for determinantal point process to improve recommendation diversity. In NIPS, 2018. [[paper]](https://arxiv.org/pdf/1709.05135.pdf) [[简评]](./papers/dpp.md) [⭐️⭐️⭐️]
 
 ---
 
@@ -236,9 +235,17 @@ experimentation. InKDD, 2010. [[paper]]()
 
 ---
 
-### 5.8 其他
+### 5.8 其他论文汇总
+* guyulongcs
+  * [Awesome-Deep-Learning-Papers-for-Search-Recommendation-Advertising](https://github.com/guyulongcs/Awesome-Deep-Learning-Papers-for-Search-Recommendation-Advertising?tab=readme-ov-file#multi-modal)
+* Doragd
+  * [Algorithm-Practice-in-Industry](https://github.com/Doragd/Algorithm-Practice-in-Industry)
+* wangzhe
+  * [Reco-papers](https://github.com/wzhe06/Reco-papers)
+  * [Ad-papers](https://github.com/wzhe06/Ad-papers)
+  * [Real-Time Bidding](https://github.com/wzhe06/rtb-papers)
 
-总体感觉推荐方向的论文写的都挺扯淡的。论证角度不是很高，工业细节也不够细。想法和贡献大多来自CV、NLP
+总体感觉推荐方向的论文写的都挺扯淡的。论证角度不是很高，工业细节也不够细。想法和贡献大多来自CV、NLP。
 
 
 ---
@@ -264,6 +271,7 @@ experimentation. InKDD, 2010. [[paper]]()
   - 学了个新操作 `torch.einsum`
   - fibnet的复杂操作可以简化
 - multi-hot的定长批处理实现的比较丑
+- 提高mmoe模型的并发效率（参考RNN里四个门的计算过程）
 
 - 文档自动生成生成
   - python-sphinex

@@ -1,14 +1,10 @@
-# 模型指标(metrics)
-* accuracy、precision、recall、f1
-* roc、auc
+# 模型评估指标(Evaluation Metrics)
 
 
+## Content
 
-## 模型常用指标
-accuracy、precision、recall、f1
-
-![](./limu-2.png)
-
-roc曲线、auc面积
-
-![](./limu-1.png)
+* [分类指标](./%E5%88%86%E7%B1%BB%E6%8C%87%E6%A0%87.md)
+  * Accuracy、Precision、Recall、F1
+  * Roc、Auc
+  
+* [商业指标](./%E5%95%86%E4%B8%9A%E6%8C%87%E6%A0%87.md)
